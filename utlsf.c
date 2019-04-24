@@ -579,7 +579,7 @@ size_t utlsf_create(void *buf, utlsf_size_t max_alloc_size)
     printf("max_alloc_size_log2=%u fl_index_count=%u\n", max_alloc_size_log2, fl_index_count);
     unsigned free_list_count = (fl_index_count * SL_INDEX_COUNT) + 1;
     unsigned free_list_size = free_list_count * sizeof(uintptr_t);
-    unsigned sl_bitmap_size = (fl_index_count + SL_INDEX_COUNT);
+    unsigned sl_bitmap_size = fl_index_count;
     unsigned total_size = sizeof(utlsf_t) + free_list_size + sl_bitmap_size;
 
     if (buf) {
@@ -713,7 +713,7 @@ int main()
     printf("sizeof(utlsf) == %u\n", sizeof(utlsf));
     printf("FL_INDEX_COUNT == %u\n", FL_INDEX_COUNT);
     printf("SL_INDEX_COUNT == %u\n", SL_INDEX_COUNT);
-    utlsf_create(&utlsf, 0x7fff);
+    utlsf_create(&utlsf, (1<<17)-1);
 
     utlsf_add_pool(&utlsf, heap, sizeof(heap));
 //    utlsf_walk_free(&utlsf);
